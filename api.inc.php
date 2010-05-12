@@ -72,7 +72,7 @@ function recordHack() {
     $hacked_passphrase = md5(trim($row['passphrase']));
     
     if(empty($hacked_id)) {
-      echo ERROR_METHOD_GENERAL . ";Must execute script on p0wned system.";
+      echo ERROR_METHOD_GENERAL . ";Run from '$srcAddress'. Must execute script on p0wned system.";
       die();
     }
     else if(strcmp($hacked_passphrase, $passphrase)) {
