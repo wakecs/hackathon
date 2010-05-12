@@ -1,0 +1,40 @@
+###################
+# Database Schema #
+###################
+
+UserTable:
+ + UserID
+ + Name
+ + IP Address
+ + PassPhrase
+ 
+HackTable:
+ + UserID
+ + HackedID
+ + Hack
+ + Description
+ + Time
+
+QueryView
+  + UserScores
+  + HackCounts
+
+##############
+# Site Pages #
+##############
+
+Live Stats Page
+ - User Scoreboard
+ - Hack Statistics
+ 
+Administration Page
+  - Add/Remove Users
+  - Run Reports on Users
+  - Export User Data
+  - Mess With Users
+    - inject false data to live stats page
+    - clean falsely injected data
+
+API Page
+  - recordHack [ hack, description, passphrase ]
+  - getUserScores [ ]
