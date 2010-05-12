@@ -9,15 +9,15 @@ function getUserScores() {
     $first = true;    
     foreach ($dbh->query($sql) as $row) {
       if($first) {
-        print('0;' . $row['id'] . ':' . $row['score']);
+        echo SUCCESS . ';' . $row['id'] . ':' . $row['score'];
         $first = false;
       }
       else
-        print ',' . $row['id'] . ':' . $row['score'];
+        echo ',' . $row['id'] . ':' . $row['score'];
     }
   }
   catch (PDOException $e) {
-    print(ERROR_DB . ';Database Error: ' . $e->getMessage());
+    echo ERROR_DB . ';Database Error: ' . $e->getMessage();
     die();
   }
   
@@ -33,36 +33,81 @@ function recordHack() {
       die();
     }
     
-    $params = explode(',', $_POST['params']);
+    $params = explode(':', $_POST['params']);
     foreach($params as $param) {
       $val = explode('=', $param);
       switch(trim($val[0])) {
         case 'hack':
-          $hack = $val[1];
+          $hack = trim($val[1]);
           break;
         case 'description':
-          $description = $val[1];
+          $description = trim($val[1]);
           break;
         case 'passphrase':
-          $passphrase = $val[1];
+          $passphrase = trim($val[1]);
           break;
+        case 'address':
+          $address = trim($val[1]);
       }
     }
     
     // make sure all parameters given
-    if(empty($hack) || empty($description) || empty($passphrase)) {
+    if(empty($hack) || empty($description) || empty($passphrase) || empty($address)) {
       echo ERROR_MISSING_PARAMS . ';Missing Parameters!:' . $_POST['params'];
       die();
     }
     
-    // open a connection and query database for users
+    $srcAddress = $_SERVER['REMOTE_ADDR'];
+    
+    // open a connection and for inserting hack
     global $DB_CONN_STRING, $DB_USER, $DB_PASS;
     $dbh = new PDO($DB_CONN_STRING, $DB_USER, $DB_PASS);
     
-    // TODO: Update Database based on IP Address
+    // let's get the hacked id
+    $stmt = $dbh->prepare("SELECT id, passphrase FROM Users WHERE ipaddress = :ipaddress");
+    $stmt->bindParam(':ipaddress', $srcAddress);
+    $stmt->execute();
+    $row = $stmt->fetch();
+    $hacked_id = $row['id'];
+    $hacked_passphrase = md5(trim($row['passphrase']));
+    
+    if(empty($hacked_id)) {
+      echo ERROR_METHOD_GENERAL . ";Must execute script on p0wned system.";
+      die();
+    }
+    else if(strcmp($hacked_passphrase, $passphrase)) {
+      echo ERROR_METHOD_GENERAL . ";Passphrase hash didn't match!";
+      die();
+    }
+    
+    // let's get the hacker id
+    $stmt->bindParam(':ipaddress', $address);
+    $stmt->execute();
+    $row = $stmt->fetch();
+    $id = $row['id'];
+    
+    if(empty($id)) {
+      echo ERROR_METHOD_GENERAL . ";Bad IP! $address was not found in the database!";
+      die();
+    }
+    
+    // prepare SQL statement and insert hack into database
+    $stmt = $dbh->prepare("INSERT INTO Hacks (id, hacked_id, hack, description) VALUES (:id, :hacked_id, :hack, :description)");
+    $stmt->bindParam(':id', $id);
+    $stmt->bindParam(':hacked_id', $hacked_id);
+    $stmt->bindParam(':hack', $hack);
+    $stmt->bindParam(':description', $description);
+    $count = $stmt->execute();
+    
+    if($count > 0) {
+      echo SUCCESS . ";p0wnage complete!";
+    }
+    else {
+      echo ERROR_DB . ";Database gerbil failed to record hack!";
+    }
   }
   catch (PDOException $e) {
-    print(ERROR_DB . ';Database Error: ' . $e->getMessage());
+    echo ERROR_DB . ';Database Error: ' . $e->getMessage();
     die();
   }
   

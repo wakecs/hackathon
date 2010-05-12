@@ -2,6 +2,7 @@
 
 include_once 'mysql.inc.php';
 include_once 'api.inc.php';
+include_once 'constants.inc.php';
 
 if(!empty($_POST['method'])) {
   switch($_POST['method']) {

@@ -7,14 +7,14 @@ var ANIM_DELAY = 350;
 var PAGE_TIMER_ID;
 
 function animateUserBar(userId, score) {
-  var curScore = $("div#score" + userId).html();
+  var prevScore = $("div#score" + userId).html();
   var user = $("div#user" + userId);
-  var userHeight = HEIGHT_WEIGHT*(SCORE_BASE + parseInt(score));
-  var userScore = SCORE_WEIGHT*(SCORE_BASE + 1*parseInt(score));
-  var change = userScore - curScore;
+  var curHeight = HEIGHT_WEIGHT*(SCORE_BASE + parseInt(score));
+  var curScore = SCORE_WEIGHT*(SCORE_BASE + parseInt(score));
+  var change = curScore - prevScore;
  
   if(0 != change) {
-    if(0 == userHeight) {
+    if(0 == curHeight) {
       user.animate(
         { height: 1 },
         ANIM_DELAY,
@@ -25,24 +25,24 @@ function animateUserBar(userId, score) {
     else {
       user.css({ 'visibility' : 'visible' });
       user.animate(
-        { height: Math.abs(userHeight) },
+        { height: Math.abs(curHeight) },
         ANIM_DELAY,
         function() {
-          if(userHeight < 0)
+          if(curHeight < 0)
             user.css({ 'background-color' : 'red' });
           else
             user.css({ 'background-color' : 'green' });
       });
     }
 
-    var top = user.offset().top + Math.abs(userHeight) + 5;
+    var top = user.offset().top + Math.abs(curHeight) + 5;
     var left = user.offset().left;
     var sign = change > 0 ? '+' : '';
     $("body").append("<div id=\"tooltip" + userId + "\" class=\"tooltip\">" + sign + change + "</div>");
     $("div#tooltip" + userId).css({ 'left' : left, 'top' : top }).fadeIn(TOOL_DELAY).fadeOut(TOOL_DELAY, function() {
       $(this).remove();
     }); 
-    $("div#score" + userId).html(userScore);
+    $("div#score" + userId).html(curScore);
   }
 }
 
