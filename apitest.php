@@ -5,8 +5,6 @@
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
   <link rel="stylesheet" href="global.css.php" type="text/css" media="screen" />
-  <script src="js/jquery-1.4.2.js" type="text/javascript"></script>        
-  <script src="js/custom.js" type="text/javascript"></script>
   <title>Hack-a-Thon Playground - API Test Page</title>
 </head>
 
@@ -15,6 +13,7 @@
     <p>Method: 
     <select name="method">
       <option value="getUserScores">getUserScores</option>
+      <option value="getUserStats">getUserStats</option>
       <option value="recordHack">recordHack</option>
     </select></p>
     <p>Params: 

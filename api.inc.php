@@ -9,11 +9,48 @@ function getUserScores() {
     $first = true;    
     foreach ($dbh->query($sql) as $row) {
       if($first) {
-        echo SUCCESS . ';' . $row['id'] . ':' . $row['score'];
+        echo SUCCESS . ';';
         $first = false;
       }
+      else {
+        echo ',';
+      }
+      echo $row['id'] . ':' . $row['score'];
+    }
+  }
+  catch (PDOException $e) {
+    echo ERROR_DB . ';Database Error: ' . $e->getMessage();
+    die();
+  }
+  
+  // close the connection
+  $dbh = null;
+}
+
+function getUserStats() {
+  try {
+    // open a connection and query database for users
+    global $DB_CONN_STRING, $DB_USER, $DB_PASS;
+    $dbh = new PDO($DB_CONN_STRING, $DB_USER, $DB_PASS);
+    $sql = "SELECT * FROM UserStats ORDER BY id";
+    $first = true;    
+    foreach ($dbh->query($sql) as $row) {
+      $score = SCORE_WEIGHT*(SCORE_BASE + $row['score']);
+      if($score < 0)
+        $avatar = 'http://unicornify.appspot.com/avatar/' . md5($row['ipaddress']) . '?s=128';
+      else if(0 == $score)
+        $avatar = 'http://www.gravatar.com/avatar/' . md5($row['ipaddress']) . '?d=wavatar&s=128';
       else
-        echo ',' . $row['id'] . ':' . $row['score'];
+        $avatar = 'http://www.gravatar.com/avatar/' . md5($row['ipaddress']) . '?d=monsterid&s=128';
+      if($first) {
+        echo SUCCESS . ';'; 
+        $first = false;
+      }
+      else {
+        echo ',';
+      }
+      echo $row['id'] . '|' . $row['hacks'] . '|' . $row['hacked'] . '|';
+      echo $row['last_hack'] . '|' . $avatar;
     }
   }
   catch (PDOException $e) {

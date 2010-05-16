@@ -8,7 +8,7 @@ html, body {
   background-color: #b09f73;
 }
 
-div#userBox, div#scoreBox, div#footer {
+div#userBox, div#scoreBox, div#footer, div#userStatsBox {
   width:  640px;
 	margin: auto auto;
 }
@@ -84,8 +84,22 @@ div#footer {
   width: 50px;
   height: 1.5em;
   text-align: center;
+  background-color: transparent;
+  font-weight: bold;
+  display: none;
+}
+
+div.userStats {
+  position: absolute;
+  width: 300px;
+  height: 138px;
   background-color: #ffffff;
   display: none;
+}
+
+div.userStats img {
+  float: left;
+  margin: 5px;
 }
 
 <?php

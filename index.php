@@ -37,6 +37,8 @@
       <option value="60">60 sec</option>
     </select>
   </div>
-  
+  <div id="userStatsBox">
+    <?php generateUserStats(); ?>
+  </div>
 </body>
 </html>

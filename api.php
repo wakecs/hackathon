@@ -9,6 +9,9 @@ if(!empty($_POST['method'])) {
       case 'getUserScores':
         getUserScores();
         break;
+      case 'getUserStats':
+        getUserStats();
+        break;
       case 'recordHack':
         recordHack();
         break;

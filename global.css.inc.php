@@ -8,12 +8,19 @@ function generateUserCss() {
     // open a connection and query database for users
     global $DB_CONN_STRING, $DB_USER, $DB_PASS;
     $dbh = new PDO($DB_CONN_STRING, $DB_USER, $DB_PASS);
-    $sql = "SELECT * FROM UserScores";
+    $sql = "SELECT * FROM UserScores ORDER BY id";
     foreach ($dbh->query($sql) as $row) {
-      $height = HEIGHT_WEIGHT*(SCORE_BASE + $row['score']);
+      $height = abs(HEIGHT_WEIGHT*(SCORE_BASE + $row['score']));
+      if(0 == $height)
+        $height = HEIGHT_WEIGHT;
       echo '#user' . $row['id'] . " { \n";
       echo "  height: $height" . "px;\n";
-      echo '  background-color: green;' . "\n";
+      if($row['score'] > 0)
+        echo '  background-color: green;' . "\n";
+      else if($row['score'] < 0)
+        echo '  background-color: red;' . "\n";
+      else
+        echo '  background-color: orange;' . "\n";
       echo "} \n\n";
     }
   }

@@ -13,6 +13,6 @@ define('ERROR_METHOD_GENERAL', -6);
 
 /* Score Constants */
 
-define('SCORE_WEIGHT', 5);
-define('SCORE_BASE', 14);
+define('SCORE_WEIGHT', 1);
+define('SCORE_BASE', 0);
 define('HEIGHT_WEIGHT', 10);
