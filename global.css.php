@@ -87,6 +87,7 @@ div#footer {
   background-color: transparent;
   font-weight: bold;
   display: none;
+  z-index: 1;
 }
 
 div.userStats {
@@ -95,6 +96,7 @@ div.userStats {
   height: 138px;
   background-color: #ffffff;
   display: none;
+  z-index: 2;
 }
 
 div.userStats img {
