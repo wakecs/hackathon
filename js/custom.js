@@ -73,7 +73,8 @@ function updateUserStats() {
         $(userIdStats + " span.hacks").text(val[1]);
         $(userIdStats + " span.hacked").text(val[2]);
         $(userIdStats + " span.lasthack").text(val[3]);
-        $(userIdStats + " img").attr("src", val[4]);
+        $(userIdStats + " span.lasthacked").text(val[4]);
+        $(userIdStats + " img").attr("src", val[5]);
       }
     }
   });

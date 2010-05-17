@@ -92,7 +92,7 @@ div#footer {
 
 div.userStats {
   position: absolute;
-  width: 300px;
+  width: 325px;
   height: 138px;
   background-color: #ffffff;
   display: none;

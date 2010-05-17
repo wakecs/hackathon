@@ -2,6 +2,7 @@
 
 include_once 'mysql.inc.php';
 include 'constants.inc.php';
+include 'time.inc.php';
 
 function generateUserIds() {
   try {
@@ -89,7 +90,7 @@ function generateUserStats() {
     // open a connection and query database for users
     global $DB_CONN_STRING, $DB_USER, $DB_PASS;
     $dbh = new PDO($DB_CONN_STRING, $DB_USER, $DB_PASS);
-    $sql = "SELECT * FROM UserStats ORDER BY id";
+    $sql = "SELECT * FROM UserScores ORDER BY id";
     $first = true;
     foreach ($dbh->query($sql) as $row) {
       $score = SCORE_WEIGHT*(SCORE_BASE + $row['score']);
@@ -111,7 +112,8 @@ function generateUserStats() {
       echo 'Machine: <span class="machine">' . $row['ipaddress'] . '</span><br />';
       echo 'Hacks: <span class="hacks">' . $row['hacks'] . '</span><br />';
       echo 'Hacked: <span class="hacked">' . $row['hacked'] . '</span><br />';
-      echo 'Last Hack: <span class="lasthack">' . $row['last_hack']. '</span><br />';
+      echo 'Last Hack: <span class="lasthack">' . getElapsedTime(strtotime($row['last_hack'])) . '</span><br />';
+      echo 'Last Hacked: <span class="lasthacked">' . getElapsedTime(strtotime($row['last_hacked'])) . '</span><br />';
       echo "</div>\n";
     }
   }

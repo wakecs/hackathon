@@ -32,7 +32,7 @@ function getUserStats() {
     // open a connection and query database for users
     global $DB_CONN_STRING, $DB_USER, $DB_PASS;
     $dbh = new PDO($DB_CONN_STRING, $DB_USER, $DB_PASS);
-    $sql = "SELECT * FROM UserStats ORDER BY id";
+    $sql = "SELECT * FROM UserScores ORDER BY id";
     $first = true;    
     foreach ($dbh->query($sql) as $row) {
       $score = SCORE_WEIGHT*(SCORE_BASE + $row['score']);
@@ -50,7 +50,8 @@ function getUserStats() {
         echo ',';
       }
       echo $row['id'] . '|' . $row['hacks'] . '|' . $row['hacked'] . '|';
-      echo $row['last_hack'] . '|' . $avatar;
+      echo getElapsedTime(strtotime($row['last_hack'])) . '|'; 
+      echo getElapsedTime(strtotime($row['last_hacked'])) . '|' . $avatar;
     }
   }
   catch (PDOException $e) {

@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: May 16, 2010 at 02:56 AM
+-- Generation Time: May 17, 2010 at 03:34 PM
 -- Server version: 5.1.37
 -- PHP Version: 5.2.10-2ubuntu6.4
 
@@ -90,8 +90,30 @@ INSERT INTO `Hacks` (`id`, `hacked_id`, `hack`, `description`, `time`) VALUES
 (5, 2, 'python', 'python', '2010-05-16 02:28:52'),
 (5, 2, 'python', 'python', '2010-05-16 02:50:15'),
 (2, 6, 'python', 'python', '2010-05-16 02:51:35'),
-(2, 6, 'python', 'python', '2010-05-16 02:52:00');
+(2, 6, 'python', 'python', '2010-05-16 02:52:00'),
+(1, 2, 'python', 'python', '2010-05-17 14:52:49'),
+(6, 2, 'python', 'python', '2010-05-16 03:18:08');
 
+-- --------------------------------------------------------
+
+--
+-- Stand-in structure for view `LastHack`
+--
+DROP VIEW IF EXISTS `LastHack`;
+CREATE TABLE IF NOT EXISTS `LastHack` (
+`id` int(11)
+,`time` timestamp
+);
+-- --------------------------------------------------------
+
+--
+-- Stand-in structure for view `LastHacked`
+--
+DROP VIEW IF EXISTS `LastHacked`;
+CREATE TABLE IF NOT EXISTS `LastHacked` (
+`id` int(11)
+,`time` timestamp
+);
 -- --------------------------------------------------------
 
 --
@@ -105,21 +127,8 @@ CREATE TABLE IF NOT EXISTS `UserScores` (
 ,`hacks` bigint(21)
 ,`hacked` bigint(21)
 ,`score` bigint(21)
-);
--- --------------------------------------------------------
-
---
--- Stand-in structure for view `UserStats`
---
-DROP VIEW IF EXISTS `UserStats`;
-CREATE TABLE IF NOT EXISTS `UserStats` (
-`id` int(11)
-,`name` varchar(255)
-,`ipaddress` varchar(17)
-,`hacks` bigint(21)
-,`hacked` bigint(21)
-,`score` bigint(21)
 ,`last_hack` timestamp
+,`last_hacked` timestamp
 );
 -- --------------------------------------------------------
 
@@ -167,17 +176,26 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 -- --------------------------------------------------------
 
 --
--- Structure for view `UserScores`
+-- Structure for view `LastHack`
 --
-DROP TABLE IF EXISTS `UserScores`;
+DROP TABLE IF EXISTS `LastHack`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `UserScores` AS select `Users`.`id` AS `id`,`Users`.`name` AS `name`,`Users`.`ipaddress` AS `ipaddress`,`HackCounts`.`hacks` AS `hacks`,`HackedCounts`.`hacked` AS `hacked`,(`HackCounts`.`hacks` - `HackedCounts`.`hacked`) AS `score` from ((`Users` left join `HackCounts` on((`Users`.`id` = `HackCounts`.`id`))) left join `HackedCounts` on((`Users`.`id` = `HackedCounts`.`id`)));
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `LastHack` AS select `Users`.`id` AS `id`,max(`Hacks`.`time`) AS `time` from (`Users` left join `Hacks` on((`Users`.`id` = `Hacks`.`id`))) group by `Users`.`id`,`Hacks`.`id`;
 
 -- --------------------------------------------------------
 
 --
--- Structure for view `UserStats`
+-- Structure for view `LastHacked`
 --
-DROP TABLE IF EXISTS `UserStats`;
+DROP TABLE IF EXISTS `LastHacked`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `UserStats` AS select `UserScores`.`id` AS `id`,`UserScores`.`name` AS `name`,`UserScores`.`ipaddress` AS `ipaddress`,`UserScores`.`hacks` AS `hacks`,`UserScores`.`hacked` AS `hacked`,`UserScores`.`score` AS `score`,max(`Hacks`.`time`) AS `last_hack` from (`UserScores` left join `Hacks` on((`Hacks`.`id` = `UserScores`.`id`))) group by `UserScores`.`id` order by `UserScores`.`id`;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `LastHacked` AS select `Users`.`id` AS `id`,max(`Hacks`.`time`) AS `time` from (`Users` left join `Hacks` on((`Users`.`id` = `Hacks`.`hacked_id`))) group by `Users`.`id`,`Hacks`.`hacked_id`;
+
+-- --------------------------------------------------------
+
+--
+-- Structure for view `UserScores`
+--
+DROP TABLE IF EXISTS `UserScores`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `UserScores` AS select `Users`.`id` AS `id`,`Users`.`name` AS `name`,`Users`.`ipaddress` AS `ipaddress`,`HackCounts`.`hacks` AS `hacks`,`HackedCounts`.`hacked` AS `hacked`,(`HackCounts`.`hacks` - `HackedCounts`.`hacked`) AS `score`,`LastHack`.`time` AS `last_hack`,`LastHacked`.`time` AS `last_hacked` from ((((`Users` left join `HackCounts` on((`Users`.`id` = `HackCounts`.`id`))) left join `HackedCounts` on((`Users`.`id` = `HackedCounts`.`id`))) left join `LastHack` on((`Users`.`id` = `LastHack`.`id`))) left join `LastHacked` on((`Users`.`id` = `LastHacked`.`id`)));
