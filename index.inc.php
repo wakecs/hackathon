@@ -97,7 +97,7 @@ function generateUserStats() {
       if($score < 0)
         $avatar = 'http://unicornify.appspot.com/avatar/' . md5($row['ipaddress']) . '?s=128';
       else if(0 == $score)
-        $avatar = 'http://www.gravatar.com/avatar/' . md5($row['ipaddress']) . '?d=wavatar&s=128';
+        $avatar = 'http://www.gravatar.com/avatar/' . md5($row['ipaddress']) . '?d=identicon&s=128';
       else
         $avatar = 'http://www.gravatar.com/avatar/' . md5($row['ipaddress']) . '?d=monsterid&s=128';
       if ($first) {
