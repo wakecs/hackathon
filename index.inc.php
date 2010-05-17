@@ -109,6 +109,7 @@ function generateUserStats() {
         echo "    <div class=\"userStats\" id=\"$cssid\">";
                 
       echo '<img class="avatar" alt="User Avatar" src="' . $avatar . '"/>';
+      echo '<span class="name">' . $row['name'] . '</span><br />';
       echo 'Machine: <span class="machine">' . $row['ipaddress'] . '</span><br />';
       echo 'Hacks: <span class="hacks">' . $row['hacks'] . '</span><br />';
       echo 'Hacked: <span class="hacked">' . $row['hacked'] . '</span><br />';

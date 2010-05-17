@@ -92,7 +92,7 @@ div#footer {
 
 div.userStats {
   position: absolute;
-  width: 325px;
+  width: 350px;
   height: 138px;
   background-color: #ffffff;
   display: none;
@@ -102,6 +102,16 @@ div.userStats {
 div.userStats img {
   float: left;
   margin: 5px;
+}
+
+div.userStats span.name {
+  font-weight: bold;
+  font-style: normal;
+  font-size: 20pt;
+}
+
+div.userStats span {
+  font-style: italic;
 }
 
 <?php
