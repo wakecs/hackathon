@@ -1,6 +1,10 @@
 <?php
 
 function getElapsedTime($start, $end = false) {
+  if(empty($start)) {
+    return "Never";
+  }
+  
   $end = $end ? $end : time();  
   $elapsed = $end - $start;
   

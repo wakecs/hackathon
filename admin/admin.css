@@ -1,0 +1,102 @@
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+}
+
+span.checkTitle {
+  float: left;
+  font-weight: bold;
+  display: block;
+  margin: 0 4px;
+}
+
+span.title {
+  font-weight: bold;
+  display: block;
+  width: 208px;
+  float: left;
+}
+
+.error {
+  color: red;
+}
+
+.alignRight {
+  text-align: right;
+}
+
+h1#header {
+  margin: 0;
+  padding: 5px;
+  width: 100%;
+  background-color: #000000;
+  color: #ffffff;
+}
+
+div#container {
+  float: left;
+  width: 800px;
+  margin: 10px auto;
+}
+
+div#container h3 {
+  margin: 0 0 10px 0;
+}
+
+/* Insert Form */
+
+form#insert input.text {
+  width: 200px;
+  margin: 0;
+}
+
+form#numUsers input.number {
+  width: 1.5em;
+}
+
+/* Update/Delete Form */
+
+form#update {
+  clear: left;
+}
+
+form#update input.text {
+  width: 200px;
+  margin: 2px;
+}
+
+form#update input.checkbox {
+  clear: left;
+  margin: 2px 6px;
+}
+
+/* Navigation Panel */
+
+div#navPanel {
+  float: left;
+  margin: 10px;
+  width: 200px;
+}
+
+div#userPanel, div#hijinxPanel, div#reportPanel {
+  background-color: #f0f0f0;
+  margin-bottom: 10px;
+}
+
+div#userPanel ul, div#hijinxPanel ul, div#reportPanel ul {
+  margin: 0;
+  padding: 5px;
+}
+
+div#userPanel ul li, div#hijinxPanel ul li, div#reportPanel ul li {
+  list-style-type: none;
+}
+
+div#userPanel h2, div#hijinxPanel h2, div#reportPanel h2 {
+  margin: 0;
+  background-color: #000000;
+  color: #ffffff;
+  padding: 4px;
+}
