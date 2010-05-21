@@ -73,6 +73,7 @@ END;
 
   echo <<<END
       </table>
+      <input type="hidden" name="numusers" value="$count" />
       <input type="hidden" name="page" value="insertUsers" />
       <input type="submit" name="submit" />
     </form>
