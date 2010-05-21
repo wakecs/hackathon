@@ -3,13 +3,11 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: May 17, 2010 at 04:59 PM
+-- Generation Time: May 21, 2010 at 01:35 AM
 -- Server version: 5.1.37
 -- PHP Version: 5.2.10-2ubuntu6.4
 
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT=0;
-START TRANSACTION;
 
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
@@ -21,6 +19,28 @@ START TRANSACTION;
 -- Database: `hackathon`
 --
 
+-- --------------------------------------------------------
+
+--
+-- Stand-in structure for view `FakeHack`
+--
+DROP VIEW IF EXISTS `FakeHack`;
+CREATE TABLE IF NOT EXISTS `FakeHack` (
+`id` int(11)
+,`name` varchar(255)
+,`ipaddress` varchar(17)
+,`count` bigint(20)
+);
+-- --------------------------------------------------------
+
+--
+-- Stand-in structure for view `FakeHackCounts`
+--
+DROP VIEW IF EXISTS `FakeHackCounts`;
+CREATE TABLE IF NOT EXISTS `FakeHackCounts` (
+`id` int(11)
+,`count` bigint(21)
+);
 -- --------------------------------------------------------
 
 --
@@ -89,7 +109,7 @@ CREATE TABLE IF NOT EXISTS `Users` (
   `ipaddress` varchar(17) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   `passphrase` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=19 ;
 
 -- --------------------------------------------------------
 
@@ -107,6 +127,24 @@ CREATE TABLE IF NOT EXISTS `UserScores` (
 ,`last_hack` timestamp
 ,`last_hacked` timestamp
 );
+-- --------------------------------------------------------
+
+--
+-- Structure for view `FakeHack`
+--
+DROP TABLE IF EXISTS `FakeHack`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `FakeHack` AS select `Users`.`id` AS `id`,`Users`.`name` AS `name`,`Users`.`ipaddress` AS `ipaddress`,ifnull(`FakeHackCounts`.`count`,0) AS `count` from (`Users` left join `FakeHackCounts` on((`Users`.`id` = `FakeHackCounts`.`id`)));
+
+-- --------------------------------------------------------
+
+--
+-- Structure for view `FakeHackCounts`
+--
+DROP TABLE IF EXISTS `FakeHackCounts`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `FakeHackCounts` AS select `Users`.`id` AS `id`,count(`Hacks`.`id`) AS `count` from (`Users` left join `Hacks` on((`Users`.`id` = `Hacks`.`hacked_id`))) where (`Hacks`.`id` = -(1)) group by `Users`.`id`;
+
 -- --------------------------------------------------------
 
 --
@@ -151,4 +189,3 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 DROP TABLE IF EXISTS `UserScores`;
 
 CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `UserScores` AS select `Users`.`id` AS `id`,`Users`.`name` AS `name`,`Users`.`ipaddress` AS `ipaddress`,`HackCounts`.`hacks` AS `hacks`,`HackedCounts`.`hacked` AS `hacked`,(`HackCounts`.`hacks` - `HackedCounts`.`hacked`) AS `score`,`LastHack`.`time` AS `last_hack`,`LastHacked`.`time` AS `last_hacked` from ((((`Users` left join `HackCounts` on((`Users`.`id` = `HackCounts`.`id`))) left join `HackedCounts` on((`Users`.`id` = `HackedCounts`.`id`))) left join `LastHack` on((`Users`.`id` = `LastHack`.`id`))) left join `LastHacked` on((`Users`.`id` = `LastHacked`.`id`)));
-COMMIT;

@@ -267,7 +267,7 @@ END;
     // open a connection and query database for users
     global $DB_CONN_STRING, $DB_USER, $DB_PASS;
     $dbh = new PDO($DB_CONN_STRING, $DB_USER, $DB_PASS);
-    $sql = "SELECT * FROM FakeHack";
+    $sql = "SELECT * FROM FakeHack ORDER BY id";
 
     foreach ($dbh->query($sql) as $row) {
       echo '    <tr><td>' . $row['id'] . '</td>';
