@@ -24,8 +24,7 @@
     <div id="hijinxPanel">
       <h2>Tomfoolery</h2>
       <ul>
-        <li><a text="Insert Hacks" href="?page=insertHacks">Insert Hacks</a></li>
-        <li><a text="Clean Hacks" href="?page=cleanHacks">Clean Hacks</a></li>
+        <li><a text="Insert/Delete Hacks" href="?page=insertHacks">Insert/Delete Hacks</a></li>
       </ul>
     </div>
     <div id="reportPanel">

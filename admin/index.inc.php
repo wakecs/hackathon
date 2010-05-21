@@ -16,6 +16,9 @@ function generatePageBody() {
       case 'updateusers':
         generateUpdateForm();
         break;
+      case 'inserthacks':
+        generateInsertHackForm();
+        break;
       default:
         echo $page;
         break;
@@ -51,20 +54,24 @@ function generateInputForm() {
   }
   
   echo <<<END
-    <span class="title">Name</span>
-    <span class="title">IP Address</span>
-    <span class="title">Passphrase</span><br />
     <form id="insert" action="index.php" method="post">
+    <table>
+      <tr>
+        <td class="title">Name</td>
+        <td class="title">IP Address</td>
+        <td class="title">Passphrase</td>
+      </tr>
 END;
 
   $count = isset($_POST['numusers']) ? $_POST['numusers'] : 1;
   for($i = 0; $i < $count; ++$i) {
-      echo '      <input class="text" type="text" name="name[]" value="' . $_POST['name'][$i] .'" />';
-      echo '      <input class="text" type="text" name="ipaddress[]" value="' . $_POST['ipaddress'][$i] . '" />';
-      echo '      <input class="text" type="text" name="passphrase[]" value="' . $_POST['passphrase'][$i] . '"/><br />';
+      echo '      <tr><td><input class="text" type="text" name="name[]" value="' . $_POST['name'][$i] .'" /></td>';
+      echo '<td><input class="text" type="text" name="ipaddress[]" value="' . $_POST['ipaddress'][$i] . '" /></td>';
+      echo '<td><input class="text" type="text" name="passphrase[]" value="' . $_POST['passphrase'][$i] . '"/></td></tr>' . "\n";
   }
 
   echo <<<END
+      </table>
       <input type="hidden" name="page" value="insertUsers" />
       <input type="submit" name="submit" />
     </form>
@@ -92,7 +99,7 @@ function insertUsers() {
       $stmt->bindParam(':name', $_POST['name'][$i]);
       $stmt->bindParam(':ipaddress', $_POST['ipaddress'][$i]);
       $stmt->bindParam(':passphrase', $passphrase);
-      $count = $stmt->execute();
+      $count = $stmt->execute() ? $stmt->rowCount() : 0;
       if($count < 1) {
         echo 'Failed to insert: ' . $_POST['name'][$i] . ', ';
         echo $_POST['ipaddress'][$i] . ', ' . $_POST['passphrase'][$i] . '<br />';
@@ -129,12 +136,15 @@ function generateUpdateForm() {
     $sql = "SELECT * FROM Users ORDER BY id";
 
     echo <<<END
-<span class="checkTitle"><img alt="Update" src="images/update.png" /></span>
-    <span class="checkTitle"><img alt="Delete" src="images/delete.png" /></span>
-    <span class="title">Name</span>
-    <span class="title">IP Address</span>
-    <span class="title">Passphrase</span><br />
-    <form id="update" action="index.php" method="post">
+<form id="update" action="index.php" method="post">
+      <table>
+      <tr>
+        <td class="radioTitle"><img alt="Update" src="images/update.png" /></td>
+        <td class="radioTitle"><img alt="Delete" src="images/delete.png" /></td>
+        <td class="title">Name</td>
+        <td class="title">IP Address</td>
+        <td class="title">Passphrase</td>
+      </tr>
 
 END;
 
@@ -142,14 +152,15 @@ END;
       $id = $row['id']; $name = $row['name'];
       $ipaddress = $row['ipaddress']; $passphrase = $row['passphrase'];
       
-      echo "      <input class=\"checkbox\" type=\"checkbox\" name=\"update[]\" value=\"$id\" />";
-      echo "<input class=\"checkbox\" type=\"checkbox\" name=\"delete[]\" value=\"$id\" />";
-      echo "<input class=\"text\" type=\"text\" name=\"name$id\" value=\"$name\" />";
-      echo "<input class=\"text\" type=\"text\" name=\"ipaddress$id\" value=\"$ipaddress\" />";
-      echo "<input class=\"text\" type=\"text\" name=\"passphrase$id\" value=\"$passphrase\" /><br />";
+      echo "      <tr><td><input class=\"radio\" type=\"radio\" name=\"update[]\" value=\"$id\" /></td>";
+      echo "<td><input class=\"radio\" type=\"radio\" name=\"delete[]\" value=\"$id\" /></td>";
+      echo "<td><input class=\"text\" type=\"text\" name=\"name$id\" value=\"$name\" /></td>";
+      echo "<td><input class=\"text\" type=\"text\" name=\"ipaddress$id\" value=\"$ipaddress\" /></td>";
+      echo "<td><input class=\"text\" type=\"text\" name=\"passphrase$id\" value=\"$passphrase\" /></td></tr>\n";
     }
     
     echo <<<FOOTER
+      </table>
       <input type="hidden" name="page" value="updateUsers" />
       <input type="submit" name="submit" />
     </form>
@@ -168,7 +179,7 @@ FOOTER;
 }
 
 function updateUsers() {
-    try {
+  try {
     // open a connection and query database for users
     global $DB_CONN_STRING, $DB_USER, $DB_PASS;
     $dbh = new PDO($DB_CONN_STRING, $DB_USER, $DB_PASS);
@@ -184,9 +195,8 @@ function updateUsers() {
     $deleteCount = count($_POST['delete']);
     for($i = 0; $i < $deleteCount; ++$i) {
       $id = $_POST['delete'][$i];
-      echo $i . ':' . $id . '<br />';
       $delete->bindParam(':id', $id);
-      $count += $delete->execute();
+      $count += $delete->execute() ? $delete->rowCount() : 0;
     }
     
     $updateCount = count($_POST['update']);
@@ -197,7 +207,7 @@ function updateUsers() {
       $update->bindParam(':name', $_POST["name$id"]);
       $update->bindParam(':ipaddress', $_POST["ipaddress$id"]);
       $update->bindParam(':passphrase', $passphrase);
-      $count += $update->execute();
+      $count += $update->execute() ? $update->rowCount() : 0;
     }
     
     echo "<span class=\"success\">$count record(s) updated successfully!</span>";
@@ -209,4 +219,100 @@ function updateUsers() {
   
   // close the connection
   $dbh = null;
+}
+
+function generateInsertHackForm() {
+  echo "<h3>Insert/Delete Hacks</h3>\n";
+  if(isset($_POST['id']) && isset($_POST['numhacks']) && 
+     isset($_POST['type']))
+  {
+    if(('insert' == $_POST['type'] && fieldsComplete()) ||
+        'clean' == $_POST['type']) 
+    {
+      insertHacks();
+      return;
+    }
+  }
+  
+  echo <<<END
+    <form id="injectHacks" action="index.php" method="post">
+    <table>
+      <tr>
+        <td class="radioTitle"><img alt="Insert" src="images/update.png" /></td>
+        <td class="radioTitle"><img alt="Clean" src="images/delete.png" /></td>
+        <td class="title">List of IDs</td>
+        <td class="title"># Hacks</td>
+      </tr>
+      <tr>
+        <td><input class="radio" type="radio" name="type" value="insert" /></td>
+        <td><input class="radio" type="radio" name="type" value="clean" /></td>
+        <td><input class="text" type="text" name="id" /></td>
+        <td><input class="number" type="text" name="numhacks" /></td>
+      </tr>
+    </table>
+    <input type="hidden" name="page" value="insertHacks" />
+    <input type="submit" name="submit" />
+    </form>
+    <table id="injectedHackTable">
+    <tr>
+      <td class="title">ID</td>
+      <td class="title">Name</td>
+      <td class="title">IP Address</td>
+      <td class="title">Injected Hacks</td>
+    </tr>
+
+END;
+
+  try {
+    // open a connection and query database for users
+    global $DB_CONN_STRING, $DB_USER, $DB_PASS;
+    $dbh = new PDO($DB_CONN_STRING, $DB_USER, $DB_PASS);
+    $sql = "SELECT * FROM FakeHack";
+
+    foreach ($dbh->query($sql) as $row) {
+      echo '    <tr><td>' . $row['id'] . '</td>';
+      echo '<td>' . $row['name'] . '</td>';
+      echo '<td>' . $row['ipaddress'] . '</td>';
+      echo '<td>' . $row['count'] . "</td></tr>\n";
+    }
+    echo "    </table>\n";
+  }
+  catch (PDOException $e) {
+    echo ERROR_DB . ';Database Error: ' . $e->getMessage();
+    die();
+  }
+}
+
+function insertHacks() {
+  try {
+    // open a connection and query database for users
+    global $DB_CONN_STRING, $DB_USER, $DB_PASS;
+    $dbh = new PDO($DB_CONN_STRING, $DB_USER, $DB_PASS);
+    
+    $id_array = explode(',',  $_POST['id']);
+    if('insert' == $_POST['type']) {
+      $sql = "INSERT INTO Hacks (id, hacked_id, hack, description)
+              VALUES (-1, :id, 'admin', 'admin')";
+      $numHacks = $_POST['numhacks'];
+    }
+    else {    
+      $sql = "DELETE FROM Hacks WHERE id = -1 AND hacked_id = :id";
+      $numHacks = 1;
+    }
+    $stmt = $dbh->prepare($sql);
+    
+    $count = 0;
+    foreach($id_array as $id) {
+      $stmt->bindParam(':id', $id);
+      for($i = 0; $i < $numHacks; ++$i) {
+        $count += $stmt->execute() ? $stmt->rowCount() : 0;
+      }
+    }
+    
+    echo "<span class=\"success\">$count record(s) updated successfully!</span>";
+  }
+  catch (PDOException $e) {
+    echo ERROR_DB . ';Database Error: ' . $e->getMessage();
+    die();
+  }
 }
