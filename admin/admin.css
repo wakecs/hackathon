@@ -5,6 +5,17 @@ html, body {
   height: 100%;
 }
 
+input[type="text"] {
+  height: 1.5em;
+  padding: 3px 2px;
+  border: 1px solid #d0d0d0;
+  font-size: 12pt;
+}
+
+input[name="numhacks"], input[name="numusers"] {
+  text-align: center;
+}
+
 td.radioTitle {
   text-align: center;
   font-weight: bold;
@@ -40,7 +51,13 @@ div#container h3 {
   margin: 0 0 10px 0;
 }
 
+/********************/
 /* User Insert Form */
+/********************/
+
+div#inputContainer {
+  width: 625px;
+}
 
 form#insert input.text {
   width: 200px;

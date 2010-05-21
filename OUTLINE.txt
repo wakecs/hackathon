@@ -15,7 +15,7 @@ HackTable:
  + Description
  + Time
 
-QueryView
+QueryViews:
   + UserScores
   + HackCounts
 
@@ -36,5 +36,5 @@ Administration Page
     - clean falsely injected data
 
 API Page
-  - recordHack [ hack, description, passphrase ]
+  - recordHack [ ipaddress, hack, description, passphrase ]
   - getUserScores [ ]

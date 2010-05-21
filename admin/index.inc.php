@@ -45,7 +45,7 @@ function fieldsComplete() {
 }
 
 function generateInputForm() {
-  echo '    <h3>Insert Users</h3>';
+  echo "<h3>Insert Users</h3>\n";
   if(isset($_POST['name']) && isset($_POST['ipaddress']) &&
      isset($_POST['passphrase']) && fieldsComplete())
   {
@@ -54,8 +54,9 @@ function generateInputForm() {
   }
   
   echo <<<END
+    <div id="inputContainer">
     <form id="insert" action="index.php" method="post">
-    <table>
+      <table>
       <tr>
         <td class="title">Name</td>
         <td class="title">IP Address</td>
@@ -81,6 +82,7 @@ END;
       <input type="hidden" name="page" value="insertUsers" />
       <input type="submit" name="submit" value="Update" />
     </form>
+    </div>
 END;
 }
 
@@ -121,7 +123,7 @@ function insertUsers() {
 }
 
 function generateUpdateForm() {
-  echo '    <h3>Update/Delete Users</h3>';
+  echo "<h3>Update/Delete Users</h3>\n";
   if((isset($_POST['update']) || isset($_POST['delete'])) && 
      fieldsComplete())
   {
@@ -152,8 +154,8 @@ END;
       $id = $row['id']; $name = $row['name'];
       $ipaddress = $row['ipaddress']; $passphrase = $row['passphrase'];
       
-      echo "      <tr><td><input class=\"radio\" type=\"radio\" name=\"update[]\" value=\"$id\" /></td>";
-      echo "<td><input class=\"radio\" type=\"radio\" name=\"delete[]\" value=\"$id\" /></td>";
+      echo "      <tr><td><input class=\"radio\" type=\"radio\" name=\"update[]\" value=\"update$id\" /></td>";
+      echo "<td><input class=\"radio\" type=\"radio\" name=\"update[]\" value=\"delete$id\" /></td>";
       echo "<td><input class=\"text\" type=\"text\" name=\"name$id\" value=\"$name\" /></td>";
       echo "<td><input class=\"text\" type=\"text\" name=\"ipaddress$id\" value=\"$ipaddress\" /></td>";
       echo "<td><input class=\"text\" type=\"text\" name=\"passphrase$id\" value=\"$passphrase\" /></td></tr>\n";
@@ -192,22 +194,22 @@ function updateUsers() {
     $delete = $dbh->prepare($sql);
     
     $count = 0;
-    $deleteCount = count($_POST['delete']);
-    for($i = 0; $i < $deleteCount; ++$i) {
-      $id = $_POST['delete'][$i];
-      $delete->bindParam(':id', $id);
-      $count += $delete->execute() ? $delete->rowCount() : 0;
-    }
-    
     $updateCount = count($_POST['update']);
     for($i = 0; $i < $updateCount; ++$i) {
-      $id = $_POST['update'][$i];
-      $passphrase = get_magic_quotes_gpc() ? stripslashes($_POST["passphrase$id"]) : $_POST["passphrase$id"];
-      $update->bindParam(':id', $id);
-      $update->bindParam(':name', $_POST["name$id"]);
-      $update->bindParam(':ipaddress', $_POST["ipaddress$id"]);
-      $update->bindParam(':passphrase', $passphrase);
-      $count += $update->execute() ? $update->rowCount() : 0;
+      if('delete' == substr($_POST['update'][$i],0,6)) {
+        $id = substr($_POST['update'][$i],6);
+        $delete->bindParam(':id', $id);
+        $count += $delete->execute() ? $delete->rowCount() : 0;
+      }
+      else {
+        $id = substr($_POST['update'][$i],6);
+        $passphrase = get_magic_quotes_gpc() ? stripslashes($_POST["passphrase$id"]) : $_POST["passphrase$id"];
+        $update->bindParam(':id', $id);
+        $update->bindParam(':name', $_POST["name$id"]);
+        $update->bindParam(':ipaddress', $_POST["ipaddress$id"]);
+        $update->bindParam(':passphrase', $passphrase);
+        $count += $update->execute() ? $update->rowCount() : 0;                
+      }
     }
     
     echo "<span class=\"success\">$count record(s) updated successfully!</span>";
