@@ -45,19 +45,6 @@ function animateUserBar(userId, score) {
   }
 }
 
-function updateUserBars() {
-  $.post("api.php", { method: "getUserScores" }, function(data) {
-    var result = data.split(";");
-    if(0 == result[0]) {
-      result = result[1].split(",");
-      for(var i=0; i < result.length; ++i) {
-        var val = result[i].split(":");
-        animateUserBar(val[0], val[1]);
-      }
-    }
-  });
-}
-
 /********************************
  * User Stats Related Functions *
  ********************************/
@@ -69,12 +56,13 @@ function updateUserStats() {
       result = result[1].split(",");
       for(var i=0; i < result.length; ++i) {
         var val = result[i].split("|");
-        var userIdStats = "div#user" + val[0] + "stats";
-        $(userIdStats + " span.hacks").text(val[1]);
-        $(userIdStats + " span.hacked").text(val[2]);
-        $(userIdStats + " span.lasthack").text(val[3]);
-        $(userIdStats + " span.lasthacked").text(val[4]);
-        $(userIdStats + " img").attr("src", val[5]);
+        animateUserBar(val[0], val[1]);
+        var userIdStats = "userId" + val[0] + "stats";
+        $(userIdStats + " span.hacks").text(val[2]);
+        $(userIdStats + " span.hacked").text(val[3]);
+        $(userIdStats + " span.lasthack").text(val[4]);
+        $(userIdStats + " span.lasthacked").text(val[5]);
+        $(userIdStats + " img").attr("src", val[6]);
       }
     }
   });
@@ -104,7 +92,6 @@ $(document).ready(function() {
     window.clearInterval(PAGE_TIMER_ID);
     if('off' != value)
       PAGE_TIMER_ID = window.setInterval(function() {
-        updateUserBars();
         updateUserStats(); }, 
         value*1000);
   });
@@ -112,7 +99,6 @@ $(document).ready(function() {
   // kick off timer with default value
   var value = $("select#timerDelay option:selected").val();
   PAGE_TIMER_ID = window.setInterval(function() {
-    updateUserBars();
     updateUserStats(); },
     value*1000);
   

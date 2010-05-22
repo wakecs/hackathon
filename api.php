@@ -7,9 +7,6 @@ include_once 'time.inc.php';
 
 if(!empty($_POST['method'])) {
   switch($_POST['method']) {
-      case 'getUserScores':
-        getUserScores();
-        break;
       case 'getUserStats':
         getUserStats();
         break;

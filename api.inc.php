@@ -1,32 +1,5 @@
 <?php
 
-function getUserScores() {
-  try {
-    // open a connection and query database for users
-    global $DB_CONN_STRING, $DB_USER, $DB_PASS;
-    $dbh = new PDO($DB_CONN_STRING, $DB_USER, $DB_PASS);
-    $sql = "SELECT * FROM UserScores";
-    $first = true;    
-    foreach ($dbh->query($sql) as $row) {
-      if($first) {
-        echo SUCCESS . ';';
-        $first = false;
-      }
-      else {
-        echo ',';
-      }
-      echo $row['id'] . ':' . $row['score'];
-    }
-  }
-  catch (PDOException $e) {
-    echo ERROR_DB . ';Database Error: ' . $e->getMessage();
-    die();
-  }
-  
-  // close the connection
-  $dbh = null;
-}
-
 function getUserStats() {
   try {
     // open a connection and query database for users
@@ -49,7 +22,7 @@ function getUserStats() {
       else {
         echo ',';
       }
-      echo $row['id'] . '|' . $row['hacks'] . '|' . $row['hacked'] . '|';
+      echo $row['id'] . '|' . $row['score'] . '|' . $row['hacks'] . '|' . $row['hacked'] . '|';
       echo getElapsedTime(strtotime($row['last_hack'])) . '|'; 
       echo getElapsedTime(strtotime($row['last_hacked'])) . '|' . $avatar;
     }
