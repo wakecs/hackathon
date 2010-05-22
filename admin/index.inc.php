@@ -155,8 +155,8 @@ END;
       $id = $row['id']; $name = $row['name'];
       $ipaddress = $row['ipaddress']; $passphrase = $row['passphrase'];
       
-      echo "      <tr><td><input class=\"radio\" type=\"radio\" name=\"update[]\" value=\"update$id\" /></td>";
-      echo "<td><input class=\"radio\" type=\"radio\" name=\"update[]\" value=\"delete$id\" /></td>";
+      echo "      <tr><td><input class=\"radio\" type=\"checkbox\" name=\"update[]\" value=\"$id\" /></td>";
+      echo "<td><input class=\"radio\" type=\"checkbox\" name=\"delete[]\" value=\"$id\" /></td>";
       echo "<td><input class=\"text\" type=\"text\" name=\"name$id\" value=\"$name\" /></td>";
       echo "<td><input class=\"text\" type=\"text\" name=\"ipaddress$id\" value=\"$ipaddress\" /></td>";
       echo "<td><input class=\"text\" type=\"text\" name=\"passphrase$id\" value=\"$passphrase\" /></td></tr>\n";
@@ -197,20 +197,20 @@ function updateUsers() {
     $count = 0;
     $updateCount = count($_POST['update']);
     for($i = 0; $i < $updateCount; ++$i) {
-      if('delete' == substr($_POST['update'][$i],0,6)) {
-        $id = substr($_POST['update'][$i],6);
-        $delete->bindParam(':id', $id);
-        $count += $delete->execute() ? $delete->rowCount() : 0;
-      }
-      else {
-        $id = substr($_POST['update'][$i],6);
-        $passphrase = get_magic_quotes_gpc() ? stripslashes($_POST["passphrase$id"]) : $_POST["passphrase$id"];
-        $update->bindParam(':id', $id);
-        $update->bindParam(':name', $_POST["name$id"]);
-        $update->bindParam(':ipaddress', $_POST["ipaddress$id"]);
-        $update->bindParam(':passphrase', $passphrase);
-        $count += $update->execute() ? $update->rowCount() : 0;                
-      }
+      $id = $_POST['update'][$i];
+      $passphrase = get_magic_quotes_gpc() ? stripslashes($_POST["passphrase$id"]) : $_POST["passphrase$id"];
+      $update->bindParam(':id', $id);
+      $update->bindParam(':name', $_POST["name$id"]);
+      $update->bindParam(':ipaddress', $_POST["ipaddress$id"]);
+      $update->bindParam(':passphrase', $passphrase);
+      $count += $update->execute() ? $update->rowCount() : 0;       
+    }
+    
+    $deleteCount = count($_POST['delete']);
+    for($i = 0; $i < $deleteCount; ++$i) {
+      $id = $_POST['delete'][$i];
+      $delete->bindParam(':id', $id);
+      $count += $delete->execute() ? $delete->rowCount() : 0;
     }
     
     echo "<span class=\"success\">$count record(s) updated successfully!</span>";
