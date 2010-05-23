@@ -57,7 +57,7 @@ function updateUserStats() {
       for(var i=0; i < result.length; ++i) {
         var val = result[i].split("|");
         animateUserBar(val[0], val[1]);
-        var userIdStats = "userId" + val[0] + "stats";
+        var userIdStats = "#user" + val[0] + "stats";
         $(userIdStats + " span.hacks").text(val[2]);
         $(userIdStats + " span.hacked").text(val[3]);
         $(userIdStats + " span.lasthack").text(val[4]);
