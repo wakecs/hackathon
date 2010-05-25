@@ -109,7 +109,7 @@ CREATE TABLE IF NOT EXISTS `Users` (
   `ipaddress` varchar(17) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   `passphrase` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=19 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
