@@ -10,7 +10,17 @@ html, body {
 
 div#userBox, div#scoreBox, div#footer, div#userStatsBox {
   width:  640px;
-	margin: auto auto;
+  margin: auto auto;
+}
+
+div#userBox {
+  border-radius: 0 8px 0 0;
+  -moz-border-radius: 0 8px 0 0;
+}
+
+div#scoreBox {
+   border-radius: 0 0 8px 0;
+   -moz-border-radius: 0 0 8px 0;
 }
 
 div#graphBox {
@@ -19,36 +29,56 @@ div#graphBox {
 	height: 480px;
 	margin: 0 auto;
 	background-color: #f8febd;
-  clear: left;
+   clear: left;
 }
 
 div#userBox, div#scoreBox {
-  height: 30px;
-  background-color: #85604d;
+   height: 30px;
+   background-color: #85604d;
 }
 
 div#userBoxTitle, div#userScoreTitle {
-  position: relative;
-  clear: left;
-  top: -30px;
-  left: -70px;
-  width: 70px;
-  height: 30px;
-  background-color: #000000;
-  color: #ffffff;
-  text-align: center;
-  font-weight: bold;
+   position: relative;
+   clear: left;
+   top: -28px;
+   left: -70px;
+   width: 70px;
+   height: 30px;
+   background-color: #000000;
+   color: #ffffff;
+   text-align: center;
+   font-weight: bold;
+   border-radius: 5px 0 0 5px;
+   -moz-border-radius: 5px 0 0 5px;
 }
 
+@-moz-document url-prefix()  {
+   div#userBoxTitle, div#userScoreTitle {
+      top: -29px;
+   }
+}
 div#userBoxTitle span, div#userScoreTitle span {
-  position: relative;
-  top: 5px;
+   font-family: 'Neucha', arial, serif;
+   position: relative;
+   top: 6px;
 }
 
 div.user, div.bar, div.score {
 	width: 50px;
 	float: left;
-	margin-left: 10px;
+   margin-left: 10px;
+   font-weight: bold;
+   text-shadow: 2px 2px 2px #c0c0c0;
+}
+
+div.user, div.score {
+   border-radius: 5px;
+   -moz-border-radius: 5px;
+}
+
+div.bar {
+   border-radius: 0 0 5px 5px;
+   -moz-border-radius: 0 0 5px 5px;
 }
 
 div.score, div.user {
@@ -58,7 +88,7 @@ div.score, div.user {
 }
 
 div#titleContainer {
-  margin: 0 auto 25px auto;
+  margin: 0 auto 40px auto;
   display: block;
   height: 50px;
   color: #ffffff;
@@ -68,15 +98,23 @@ div#titleContainer {
 h1#title {
   margin: 0;
   background-color: #000000;
-  width: 195px;
-  height: 1.5em;
+  width: 298px;
   padding-left: 10px;
   padding-top: 10px;
+  font: 50px/1.25em 'Cabin Sketch', arial, serif;
+  border-radius: 0 0 8px 8px;
+  -moz-border-radius: 0 0 8px 8px;
 }
 
 div#footer {
   padding: 5px 0;
   clear: left;
+}
+
+div#footer span {
+   font-family: 'Neucha', arial, serif;
+   font-weight: bold ;
+   text-shadow: 1px 1px 2px #f0f0f0;
 }
 
 .tooltip {
