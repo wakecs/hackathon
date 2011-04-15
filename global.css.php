@@ -52,11 +52,6 @@ div#userBoxTitle, div#userScoreTitle {
    -moz-border-radius: 5px 0 0 5px;
 }
 
-@-moz-document url-prefix()  {
-   div#userBoxTitle, div#userScoreTitle {
-      top: -29px;
-   }
-}
 div#userBoxTitle span, div#userScoreTitle span {
    font-family: 'Neucha', arial, serif;
    position: relative;
@@ -85,6 +80,8 @@ div.score, div.user {
   background-color: #f8febd;
   margin: 5px 0 5px 10px;
   text-align: center;
+  font-family: arial, serif;
+  font-size: 15px;
 }
 
 div#titleContainer {
