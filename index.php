@@ -16,21 +16,25 @@
 </head>
 
 <body>        
+  <div id="userStatsBox">
+    <?php generateUserStats(); ?>
+  </div>
   <div id="titleContainer">
     <h1 id="title">Hack-a-Thon</h1>
   </div>
   <div id="userBox">
     <div id="userBoxTitle"><span>Machine</span></div>
     <?php generateUserIds(); ?>
-    <div class="clear" />
+    <div class="clear"></div>
   </div>
   <div id="graphBox">
     <?php generateGraphUsers(); ?>
+    <div class="clear"></div>
   </div>
   <div id="scoreBox">
     <div id="userScoreTitle"><span>Score</span></div>
     <?php generateUserScores(); ?>
-    <div class="clear" />
+    <div class="clear"></div>
   </div>
   <div id="footer">
     <span>Update Interval:</span>
@@ -41,9 +45,7 @@
       <option value="45">45 sec</option>
       <option value="60">60 sec</option>
     </select>
-  </div>
-  <div id="userStatsBox">
-    <?php generateUserStats(); ?>
+    <div class="clear"></div>
   </div>
 </body>
 </html>

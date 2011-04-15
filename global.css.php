@@ -28,15 +28,15 @@ div#scoreBox {
 div#graphBox {
 	color: #000000;
 	width: 640px;
-	height: 640px;
+	min-height: 480px;
 	margin: 0 auto;
 	background-color: #f8febd;
-   clear: left;
 }
 
 div#userBox, div#scoreBox {
    height: 30px;
    background-color: #85604d;
+   clear: left;
 }
 
 div#userBoxTitle, div#userScoreTitle {
@@ -69,6 +69,7 @@ div.user, div.bar, div.score {
 div.bar {
    border-radius: 0 0 5px 5px;
    -moz-border-radius: 0 0 5px 5px;
+   margin-bottom: 1.75em;
 }
 
 div.score, div.user {
@@ -101,7 +102,7 @@ h1#title {
 }
 
 div#footer {
-   padding: 5px 0;
+   padding: 5px 0 75px 0;
    clear: left;
 }
 

@@ -68,12 +68,16 @@ function updateUserStats() {
   });
 }
 
-function displayUserStats(numId) {
+function displayUserStats(numId, mouseY) {
   var user = $("div#user" + numId);
   var userInfo = $("div#user" + numId + "stats");
-  var top = user.offset().top + user.height() + 5;
-  var left = user.offset().left + user.width() / 2 - userInfo.width() / 2;
-  userInfo.css({'left' : left, 'top' : top }).fadeIn(STAT_DELAY);
+  if(userInfo.is(':visible')) {
+    return;
+  } else {
+    var top = mouseY + 15;
+    var left = user.offset().left + user.width() / 2 - userInfo.width() / 2;
+    userInfo.css({'left' : left, 'top' : top }).fadeIn(STAT_DELAY);
+  }
 }
 
 function hideUserStats(numId) {
@@ -111,13 +115,36 @@ $(document).ready(function() {
   });
   
   // bind hover event to display user stats
-  $("div.bar").bind('mouseover', function() {
+  $("div.bar").bind('mouseover', function(e) {
     var numId = ($(this).attr('id').substring(4));
-    displayUserStats(numId);
+    displayUserStats(numId, e.pageY);
+  });
+ 
+  $("div.bar").bind('mouseout', function(e) {
+    var numId = ($(this).attr('id').substring(4));
+    var userInfo = $("div#user" + numId + "stats");
+    var left = $(this).offset().left;
+    var right = left + $(this).width();
+    var top = userInfo.offset().top;
+    var bottom = top + userInfo.height();
+    if (e.pageX < left || e.pageX > right ||
+        e.pageY < top  || e.pageY > bottom)
+    {
+      hideUserStats(numId);
+    }
   });
   
-  $("div.bar").bind('mouseout', function() {
-    var numId = ($(this).attr('id').substring(4));
-    hideUserStats(numId);
+  $("div.userStats").bind('mouseout', function(e) {
+    var elemId = ($(this).attr('id').replace('stats',''))
+    var userBar = $("div#" + elemId);
+    var left = userBar.offset().left;
+    var right = left + userBar.width();
+    var top = $(this).offset().top;
+    var bottom = top + $(this).height();
+    if (e.pageX < left || e.pageX > right || 
+        e.pageY < top  || e.pageY > bottom)
+    {
+       $(this).fadeOut(STAT_DELAY);
+    }
   });
 });
