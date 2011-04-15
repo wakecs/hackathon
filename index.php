@@ -9,6 +9,7 @@
   <link rel="stylesheet" href="global.css.php" type="text/css" media="screen" />
   <link href='http://fonts.googleapis.com/css?family=Neucha' rel='stylesheet' type='text/css'>
   <link href='http://fonts.googleapis.com/css?family=Cabin+Sketch:bold' rel='stylesheet' type='text/css'>
+  <link href='http://fonts.googleapis.com/css?family=Droid+Serif' rel='stylesheet' type='text/css'>
   <script src="js/jquery-1.4.2.js" type="text/javascript"></script>        
   <script src="js/custom.js" type="text/javascript"></script>
   <title>Hack-a-Thon Playground</title>
@@ -19,15 +20,17 @@
     <h1 id="title">Hack-a-Thon</h1>
   </div>
   <div id="userBox">
-    <?php generateUserIds(); ?>
     <div id="userBoxTitle"><span>Machine</span></div>
+    <?php generateUserIds(); ?>
+    <div class="clear" />
   </div>
   <div id="graphBox">
     <?php generateGraphUsers(); ?>
   </div>
   <div id="scoreBox">
-    <?php generateUserScores(); ?>
     <div id="userScoreTitle"><span>Score</span></div>
+    <?php generateUserScores(); ?>
+    <div class="clear" />
   </div>
   <div id="footer">
     <span>Update Interval:</span>
