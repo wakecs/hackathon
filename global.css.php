@@ -10,8 +10,7 @@ html, body {
    font-size: 16px;
 }
 
-div#userBox, div#scoreBox, div#footer, div#userStatsBox {
-   width:  640px;
+div#userBox, div#scoreBox, div#footer, div#userStatsBox { 
    margin: auto auto;
 }
 
@@ -27,7 +26,6 @@ div#scoreBox {
 
 div#graphBox {
 	color: #000000;
-	width: 640px;
 	min-height: 480px;
 	margin: 0 auto;
 	background-color: #f8febd;
@@ -87,7 +85,6 @@ div#titleContainer {
    display: block;
    height: 50px;
    color: #ffffff;
-   width: 640px;
 }
 
 h1#title {
@@ -160,3 +157,4 @@ div.clear {
 include 'global.css.inc.php';
 
 generateUserCss();
+
