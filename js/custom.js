@@ -107,12 +107,12 @@ $(document).ready(function() {
     value*1000);
   
   // bind click event to user bars for testing purposes
-  $("div.bar").bind('click', function() {
-    var numId = ($(this).attr('id').substring(4));
-    var score = parseInt($("div#score" + numId).html())/SCORE_WEIGHT - SCORE_BASE;
-    var userId = $(this).attr('id');
-    animateUserBar(userId.substring(4), score-8);
-  });
+  //$("div.bar").bind('click', function() {
+  //  var numId = ($(this).attr('id').substring(4));
+  //  var score = parseInt($("div#score" + numId).html())/SCORE_WEIGHT - SCORE_BASE;
+  //  var userId = $(this).attr('id');
+  //  animateUserBar(userId.substring(4), score-8);
+  //});
   
   // bind hover event to display user stats
   $("div.bar").bind('mouseover', function(e) {
