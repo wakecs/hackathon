@@ -12,7 +12,10 @@
 </head>
 
 <body>
-  <h1 id="header">Admin Panel</h1>
+  <div id="header">
+    <h1>Admin Panel</h1>
+  </div>
+  <div id="content">
   <div id="navPanel">
     <div id="userPanel">
       <h2>Users</h2>
@@ -36,6 +39,7 @@
   </div>
   <div id="container">
     <?php generatePageBody() ?>
+  </div>
   </div>
 </body>
 </html>
