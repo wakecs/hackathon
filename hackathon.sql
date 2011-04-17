@@ -142,10 +142,10 @@ DROP TABLE IF EXISTS `scorereport`;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
 /*!50001 CREATE TABLE `scorereport` (
-  `Hacker` varchar(255),
-  `Hacker IPaddress` varchar(17),
-  `Hacked` varchar(255),
-  `Hacked IP` varchar(17),
+  `hacker` varchar(255),
+  `hacker_ip` varchar(17),
+  `hacked` varchar(255),
+  `hacked_ip` varchar(17),
   `hack` varchar(255),
   `description` text,
   `time` timestamp
@@ -295,12 +295,12 @@ SET character_set_client = @saved_cs_client;
 /*!50001 SET @saved_cs_client          = @@character_set_client */;
 /*!50001 SET @saved_cs_results         = @@character_set_results */;
 /*!50001 SET @saved_col_connection     = @@collation_connection */;
-/*!50001 SET character_set_client      = utf8 */;
-/*!50001 SET character_set_results     = utf8 */;
-/*!50001 SET collation_connection      = utf8_general_ci */;
+/*!50001 SET character_set_client      = latin1 */;
+/*!50001 SET character_set_results     = latin1 */;
+/*!50001 SET collation_connection      = latin1_swedish_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
 /*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
-/*!50001 VIEW `scorereport` AS select `B`.`name` AS `Hacker`,`B`.`ipaddress` AS `Hacker IPaddress`,`C`.`name` AS `Hacked`,`C`.`ipaddress` AS `Hacked IP`,`A`.`hack` AS `hack`,`A`.`description` AS `description`,`A`.`time` AS `time` from ((`hacks` `A` left join `users` `B` on((`B`.`id` = `A`.`id`))) left join `users` `C` on((`C`.`id` = `A`.`hacked_id`))) where (`A`.`id` <> -(1)) */;
+/*!50001 VIEW `scorereport` AS select `B`.`name` AS `hacker`,`B`.`ipaddress` AS `hacker_ip`,`C`.`name` AS `hacked`,`C`.`ipaddress` AS `hacked_ip`,`A`.`hack` AS `hack`,`A`.`description` AS `description`,`A`.`time` AS `time` from ((`hacks` `A` left join `users` `B` on((`B`.`id` = `A`.`id`))) left join `users` `C` on((`C`.`id` = `A`.`hacked_id`))) where (`A`.`id` in (select `users`.`id` AS `id` from `users`) and `A`.`hacked_id` in (select `users`.`id` AS `id` from `users`)) */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
 /*!50001 SET collation_connection      = @saved_col_connection */;
@@ -333,4 +333,4 @@ SET character_set_client = @saved_cs_client;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2011-04-15 20:19:57
+-- Dump completed on 2011-04-16 23:32:32
