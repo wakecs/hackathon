@@ -40,7 +40,9 @@
     <span>Update Interval:</span>
     <select id="timerDelay">
       <option value="off">Off</option>
-      <option value="15" selected="selected">15 sec</option>
+      <option value="5" selected="selected">5 sec</option>
+      <option value="10">10 sec</option>
+      <option value="15">15 sec</option>
       <option value="30">30 sec</option>
       <option value="45">45 sec</option>
       <option value="60">60 sec</option>
