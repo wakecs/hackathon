@@ -79,7 +79,9 @@ div.score, div.user {
    text-align: center;
    font-family: 'Ubuntu', arial, serif;
    font-size: 16px;
+   font-weight: normal;
    line-height: 1.2em;
+   text-shadow: 1px 1px 2px #aaaaaa;
    border-radius: 5px;
    -moz-border-radius: 5px;
    box-shadow: inset -1px -1px 3px #aaaaaa;
