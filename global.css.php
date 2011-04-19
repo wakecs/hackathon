@@ -65,8 +65,10 @@ div.user, div.bar, div.score {
 }
 
 div.bar {
-   border-radius: 0 0 5px 5px;
-   -moz-border-radius: 0 0 5px 5px;
+   border-radius: 0 0 10px 10px;
+   -webkit-border-radius: 0 0 10px 10px;
+   -moz-border-radius: 0 0 10px 10px;
+   box-shadow: 2px 2px 5px #AAA;
    -webkit-box-shadow: 2px 2px 5px #AAA;
    -moz-box-shadow: 2px 2px 5px #AAA;
    margin-bottom: 1.75em;
