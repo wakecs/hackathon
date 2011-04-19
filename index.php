@@ -10,6 +10,7 @@
   <link href='http://fonts.googleapis.com/css?family=Neucha' rel='stylesheet' type='text/css'>
   <link href='http://fonts.googleapis.com/css?family=Cabin+Sketch:bold' rel='stylesheet' type='text/css'>
   <link href='http://fonts.googleapis.com/css?family=Droid+Serif' rel='stylesheet' type='text/css'>
+  <link href='http://fonts.googleapis.com/css?family=Ubuntu:regular,bold,bolditalic' rel='stylesheet' type='text/css'>
   <script src="js/jquery-1.4.2.js" type="text/javascript"></script>        
   <script src="js/custom.js" type="text/javascript"></script>
   <title>Hack-a-Thon Playground</title>

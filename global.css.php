@@ -61,7 +61,7 @@ div.user, div.bar, div.score {
 	float: left;
    margin-left: 10px;
    font-weight: bold;
-   text-shadow: 2px 2px 2px #c0c0c0;
+   text-shadow: 1px 1px 2px #c0c0c0;
 }
 
 div.bar {
@@ -78,8 +78,9 @@ div.score, div.user {
    background-color: #f8febd;
    margin: 5px 0 5px 10px;
    text-align: center;
-   font-family: Arial, serif;
+   font-family: 'Ubuntu', arial, serif;
    font-size: 16px;
+   line-height: 1.2em;
    border-radius: 5px;
    -moz-border-radius: 5px;
 }
