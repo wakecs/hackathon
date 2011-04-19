@@ -61,21 +61,20 @@ div.user, div.bar, div.score {
 	float: left;
    margin-left: 10px;
    font-weight: bold;
-   text-shadow: 1px 1px 2px #c0c0c0;
 }
 
 div.bar {
    border-radius: 0 0 10px 10px;
    -webkit-border-radius: 0 0 10px 10px;
    -moz-border-radius: 0 0 10px 10px;
-   box-shadow: 2px 2px 5px #AAA;
-   -webkit-box-shadow: 2px 2px 5px #AAA;
-   -moz-box-shadow: 2px 2px 5px #AAA;
+   box-shadow: 2px 2px 5px #aaaaaa;
+   -webkit-box-shadow: 2px 2px 5px #aaaaaa;
+   -moz-box-shadow: 2px 2px 5px #aaaaaa;
    margin-bottom: 1.75em;
 }
 
 div.score, div.user {
-   background-color: #f8febd;
+   background-color: #ffffff;
    margin: 5px 0 5px 10px;
    text-align: center;
    font-family: 'Ubuntu', arial, serif;
@@ -83,6 +82,9 @@ div.score, div.user {
    line-height: 1.2em;
    border-radius: 5px;
    -moz-border-radius: 5px;
+   box-shadow: inset -1px -1px 3px #aaaaaa;
+   -webkit-box-shadow: inset -1px -1px 3px #aaaaaa;
+   -moz-box-shadow: inset -1px -1px 3px #aaaaaa;
 }
 
 div#titleContainer {
