@@ -13,7 +13,7 @@
   <link href='http://fonts.googleapis.com/css?family=Ubuntu:regular,bold,bolditalic' rel='stylesheet' type='text/css'>
   <script src="js/jquery-1.4.2.js" type="text/javascript"></script>        
   <script src="js/custom.js" type="text/javascript"></script>
-  <title>Hack-a-Thon Playground</title>
+  <title>Hack-a-Thon Scoreboard</title>
 </head>
 
 <body>        
