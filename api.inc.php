@@ -87,7 +87,7 @@ function recordHack() {
       die();
     }
     else if(strcmp($hacked_passphrase, $passphrase)) {
-      echo ERROR_METHOD_GENERAL . ";Passphrase hash didn't match!";
+      echo ERROR_METHOD_GENERAL . ';Passphrase hash didn\'t match!';
       die();
     }
     
@@ -111,14 +111,18 @@ function recordHack() {
     $count = $stmt->execute();
     
     if($count > 0) {
-      echo SUCCESS . ";p0wnage complete!";
+      echo SUCCESS . ';p0wnage complete!';
     }
     else {
-      echo ERROR_DB . ";Database gerbil failed to record hack!";
+      echo ERROR_DB . ';Database gerbil failed to record hack!';
     }
   }
   catch (PDOException $e) {
-    echo ERROR_DB . ';Database Error: ' . $e->getMessage();
+    echo ERROR_DB . ';Database gerbil failed to record hack!';
+    die();
+  }
+  catch (Exception $e) {
+    echo ERROR_METHOD_GENERAL . ';Something went horribly, horribly wrong! No hack for you!';
     die();
   }
   
