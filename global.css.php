@@ -149,6 +149,7 @@ div.userStats span.name {
    font-weight: bold;
    font-style: normal;
    font-size: 20pt;
+   line-height: 1.4em;
 }
 
 div.userStats span {
