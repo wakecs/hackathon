@@ -15,4 +15,4 @@ define('ERROR_METHOD_GENERAL', -6);
 
 define('SCORE_WEIGHT', 1);
 define('SCORE_BASE', 0);
-define('HEIGHT_WEIGHT', 10);
+define('HEIGHT_WEIGHT', 18);

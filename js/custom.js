@@ -4,7 +4,7 @@
 
 var SCORE_BASE = 0;
 var SCORE_WEIGHT = 1;
-var HEIGHT_WEIGHT = 10;
+var HEIGHT_WEIGHT = 18;
 var TOOL_DELAY = 1500;
 var ANIM_DELAY = 350;
 var STAT_DELAY = 250;
@@ -145,6 +145,19 @@ $(document).ready(function() {
         e.pageY < top  || e.pageY > bottom)
     {
        $(this).fadeOut(STAT_DELAY);
+    }
+  });
+
+  // Unicorns and rainbows, oh my! (U,U,D,D,L,R,L,R,b,a)
+  var kkeys = [], konami = "38,38,40,40,37,39,37,39,66,65";
+  $(document).keydown(function(e) {
+    kkeys.push( e.keyCode );
+    if ( kkeys.toString().indexOf( konami ) >= 0 ){
+      $(document).unbind('keydown',arguments.callee);
+      $.getScript('http://www.cornify.com/js/cornify.js',function(){
+        cornify_add();
+        $(document).keydown(cornify_add);
+      });          
     }
   });
 });
